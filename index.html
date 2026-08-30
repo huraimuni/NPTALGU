@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LGU+ 인터넷 토스 프로모션 신청</title>
+<style>
+  :root {
+    --blue: #3182F6;
+    --blue-dark: #1B64DA;
+    --navy: #1A2744;
+    --gray: #8B95A1;
+    --border: #E5E8EB;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    background: #FFFFFF;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 48px 16px 80px;
+    color: #191F28;
+  }
+  .wrap { width: 100%; max-width: 520px; }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--navy);
+  }
+  .brand .dot {
+    width: 28px; height: 28px;
+    border-radius: 9px;
+    background: var(--blue);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+  }
+  .brand .dot svg { width: 16px; height: 16px; }
+
+  .heading { text-align: center; margin-bottom: 32px; }
+  .heading .eyebrow {
+    font-size: 14px;
+    color: var(--blue-dark);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .heading h1 {
+    font-size: 23px;
+    font-weight: 800;
+    color: #191F28;
+    line-height: 1.4;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 30px rgba(20, 40, 90, 0.08);
+  }
+
+  .section-label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #191F28;
+    margin-bottom: 10px;
+  }
+  .field { margin-bottom: 16px; }
+  input[type="text"], input[type="tel"], input[type="date"] {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #F9FAFB;
+    color: #191F28;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  input::placeholder { color: #B0B8C1; }
+  input:focus { border-color: var(--blue); background: white; }
+
+  select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #F9FAFB;
+    color: #191F28;
+    outline: none;
+    transition: border-color 0.15s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B95A1' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  select:invalid { color: #B0B8C1; }
+  select:focus { border-color: var(--blue); background-color: white; }
+
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .time-slot {
+    box-sizing: border-box;
+    flex: 0 0 calc((100% - 16px) / 3);
+    text-align: center;
+    padding: 11px 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #F9FAFB;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #4E5968;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.12s ease;
+  }
+  .time-slot:hover { border-color: #C7D3E0; }
+  .time-slot.selected {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+  }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 4px;
+    padding: 16px 0;
+    border: none;
+    border-radius: 14px;
+    background: var(--blue);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.05s ease;
+  }
+  .submit-btn:hover { background: var(--blue-dark); }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { background: #B0B8C1; cursor: not-allowed; }
+
+  .foot-note {
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--gray);
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  .success {
+    display: none;
+    text-align: center;
+    padding: 40px 12px 8px;
+  }
+  .success .icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #E8F3FF;
+    color: var(--blue);
+    font-size: 30px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+  }
+  .success h2 { font-size: 19px; margin-bottom: 8px; color: #191F28; }
+  .success p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+  @media (max-width: 380px) {
+    .card { padding: 22px 16px; }
+    .heading h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand"><span class="dot"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20H6C4.89543 20 4 19.1046 4 18V12Z" fill="white"/><circle cx="12" cy="12" r="2.4" fill="#3182F6"/></svg></span>엔프타 프로모션 상담 신청</div>
+
+  <div class="heading">
+    <div class="eyebrow">LGU+ 인터넷 × 토스 프로모션</div>
+    <h1>LGU+ 인터넷 토스 프로모션 신청</h1>
+  </div>
+
+  <div class="card">
+
+    <form id="leadForm">
+      <div class="field">
+        <input type="text" id="shopName" placeholder="상호" required>
+      </div>
+
+      <div class="field">
+        <input type="tel" id="phone" placeholder="연락처" required inputmode="numeric">
+      </div>
+
+      <div class="section-label">상담 희망 날짜</div>
+      <div class="field">
+        <input type="date" id="prefDate">
+      </div>
+
+      <div class="section-label">상담 가능 시간</div>
+      <div class="time-slots" id="timeSlots"></div>
+
+      <div class="section-label">상담 희망 항목</div>
+      <div class="field">
+        <select id="item" required>
+          <option value="" disabled selected>상품을 선택해주세요</option>
+          <option value="인터넷 단독 100M">인터넷 단독 100M</option>
+          <option value="인터넷 단독 500M">인터넷 단독 500M</option>
+          <option value="인터넷100M+TV">인터넷100M+TV</option>
+          <option value="인터넷100M+전화">인터넷100M+전화</option>
+          <option value="인터넷500M+TV">인터넷500M+TV</option>
+          <option value="인터넷500M+전화">인터넷500M+전화</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">동의하고 접수하기</button>
+      <div class="foot-note">접수하신 정보는 상담 목적으로만 사용되며,<br>영업일 기준 1일 이내에 담당자가 연락드립니다.</div>
+    </form>
+
+    <div class="success" id="successView">
+      <div class="icon">✓</div>
+      <h2>접수가 완료되었습니다</h2>
+      <p>빠른 시간 내에 담당자가<br>남겨주신 연락처로 안내드릴게요.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ⚠️ 구글 앱스스크립트 배포 후 받은 웹앱 URL로 바꿔주세요.
+  const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzXmoZImT837Pbo2hAbnCbIlTu7gNWJwfy1XoUKXAv-e9tnJ1jWMu3WF_ecX5pxKMN0/exec";
+
+  // 상담 희망 날짜: 기본값 = 오늘, 과거 날짜는 선택 불가
+  const dateInput = document.getElementById("prefDate");
+  function toDateStr(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
+  }
+  const todayStr = toDateStr(new Date());
+  dateInput.min = todayStr;
+  dateInput.value = todayStr;
+
+  // 9시-10시 ~ 20시-21시, 1시간 단위 상담 가능 시간대
+  const timeSlotsWrap = document.getElementById("timeSlots");
+  let selectedSlot = "";
+  for (let h = 9; h < 21; h++) {
+    const btn = document.createElement("div");
+    btn.className = "time-slot";
+    btn.textContent = h + "시-" + (h + 1) + "시";
+    btn.dataset.value = btn.textContent;
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".time-slot").forEach(s => s.classList.remove("selected"));
+      if (selectedSlot === btn.dataset.value) {
+        selectedSlot = "";
+      } else {
+        btn.classList.add("selected");
+        selectedSlot = btn.dataset.value;
+      }
+    });
+    timeSlotsWrap.appendChild(btn);
+  }
+
+  document.getElementById("leadForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const shopName = document.getElementById("shopName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const item = document.getElementById("item").value;
+
+    if (!shopName || !phone) {
+      alert("상호와 연락처는 필수입니다.");
+      return;
+    }
+    if (!item) {
+      alert("상담 희망 항목을 선택해주세요.");
+      return;
+    }
+
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.textContent = "접수 중...";
+
+    const payload = new URLSearchParams({
+      shopName: shopName,
+      phone: phone,
+      preferredDate: dateInput.value || todayStr,
+      preferredTime: selectedSlot || "미선택",
+      item: item,
+      submittedAt: new Date().toLocaleString("ko-KR"),
+    });
+
+    fetch(GAS_WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload.toString(),
+    })
+      .then(() => {
+        document.getElementById("leadForm").style.display = "none";
+        document.getElementById("successView").style.display = "block";
+      })
+      .catch(() => {
+        alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        btn.disabled = false;
+        btn.textContent = "동의하고 접수하기";
+      });
+  });
+</script>
+</body>
+</html>
